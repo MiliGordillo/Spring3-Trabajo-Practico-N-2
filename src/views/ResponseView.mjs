@@ -1,16 +1,23 @@
 export function renderizarSuperheroe(superheroe) {
+    const data = superheroe._doc || superheroe;
+  
     return {
-        Nombre: superheroe.nombreSuperHeroe,
-        "Nombre Real": superheroe.nombreReal,
-        Edad: superheroe.edad,
-        "Planeta de Origen": superheroe.planetaOrigen,
-        Debilidad: superheroe.debilidad,
-        Poderes: superheroe.poderes,
-        Aliados: superheroe.aliados,
-        Enemigos: superheroe.enemigos
+      Nombre: data.nombreSuperHeroe || data.nombreSuperheroe || "Sin nombre",
+      "Nombre Real": data.nombreReal,
+      Edad: data.edad,
+      "Planeta de Origen": data.planetaOrigen,
+      Debilidad: data.debilidad,
+      "Habilidad Especial": data.habilidadEspecial,
+      Poderes: data.poderes,
+      Aliados: data.aliados,
+      Enemigos: data.enemigos
     };
-}
-
-export function renderizarListaSuperheroes(superheroes) {
-    return superheroes.map(superheroe => renderizarSuperheroe(superheroe));
-}
+  }
+  
+  export function renderizarListaSuperheroes(superheroes) {
+    return superheroes.map(superheroe => ({
+      _id: superheroe._id?.toString() || "", // Previene errores si _id no existe
+      ...renderizarSuperheroe(superheroe)
+    }));
+  }
+  
